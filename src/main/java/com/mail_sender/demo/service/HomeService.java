@@ -1,5 +1,6 @@
 package com.mail_sender.demo.service;
 
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.Objects;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
 
 @Service
 public class HomeService {
@@ -29,6 +38,7 @@ public class HomeService {
          System.out.println("Simple massage is sent to mail id " + toMail);
      }
 
+
      public void sendMailWithAttachment(String toMail ,
                                         String body ,
                                         String subject ,
@@ -43,8 +53,9 @@ public class HomeService {
 
          FileSystemResource fileSystemResource = new FileSystemResource(new File(attachment));
 
-         mimeMessageHelper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
+         mimeMessageHelper.addAttachment(Objects.requireNonNull(fileSystemResource.getFilename()),fileSystemResource);
          javaMailSender.send(mimeMessage);
          System.out.println("Mail send with attachment with mail address " + toMail);
      }
+
 }
